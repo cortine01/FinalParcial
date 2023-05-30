@@ -23,11 +23,13 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import proyectomundial.DAO.SeleccionDAO;
+import proyectomundial.DAO.SesionDAO;
 import proyectomundial.model.Seleccion;
 
 public class GUIManual extends JFrame {
 
     SeleccionDAO seleccionDAO = new SeleccionDAO();
+    SesionDAO sesionDAO = new SesionDAO();
     
     
     // Matrix que permite almancenar la información de las selecciones futbol cargadas
@@ -59,6 +61,9 @@ public class GUIManual extends JFrame {
     
     private JPanel jPanelMenuDashboardRes;
     private JLabel btnDashboardRes;
+    
+    private JPanel jPanelMenuSesion;
+    private JLabel btnSesion;
         
     // Elementos de panel de contenido
     private JPanel jPanelRight;
@@ -112,6 +117,9 @@ public class GUIManual extends JFrame {
         jPanelMenuDashboardRes = new JPanel();
         btnDashboardRes = new JLabel();
         
+        jPanelMenuSesion = new JPanel();
+        btnSesion = new JLabel();
+        
         // Pinta el logo de la aplicación
         pintarLogo();
         
@@ -132,6 +140,8 @@ public class GUIManual extends JFrame {
         
         // Pinta y ajuste diseño del contenedor del panel izquierdo
         pintarPanelIzquierdo();
+        
+        pintarMenuSesion();
         
         
         
@@ -436,6 +446,83 @@ public class GUIManual extends JFrame {
                 accionDashboardRes();
             }
         });
+    }
+    
+    private void pintarMenuSesion() {
+        btnSesion.setIcon(new ImageIcon(getClass().getResource("/resources/icons/dashboard_resultados.png")));
+        btnSesion.setText("Iniciar Sesion");
+        btnSesion.setForeground(new java.awt.Color(255, 255, 255));
+        
+        JLabel vacioDashboardResultados = new JLabel();
+        jPanelMenuSesion.setBackground(new java.awt.Color(17, 41, 63));
+        jPanelMenuSesion.setPreferredSize((new java.awt.Dimension(220, 35)));
+        jPanelMenuSesion.setLayout(new BorderLayout(15, 0));
+        jPanelMenuSesion.add(vacioDashboardResultados, BorderLayout.WEST);
+        jPanelMenuSesion.add(btnSesion, BorderLayout.CENTER);
+        jPanelMenu.add(jPanelMenuSesion);
+        
+        btnSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                System.out.println("Inicio de Sesion");
+                accionSesion();
+            }
+        });
+    }
+    
+    private void accionSesion() {
+        
+        jLabelTop.setText("Iniciar Sesion");
+        
+        //JTextArea a = new JTextArea();
+        /*a.setText("En esta sección, teniendo en cuenta los datos que fueron cargados en la matriz de selecciones \n"
+                + "se deben mostrar los siguientes datos:\n\n"
+                + "1. Total de selecciones Cargadas \n"
+                + "2. Número de selecciones por continente (Se puede usar una tabla para pintar esto) \n"
+                + "3. Cantidad de nacionalidades diferentes de los directores técnicos \n"
+                + "4. Ranking de nacionalidades de directores técnicos \n\n"
+                + "Utilice los diferentes componentes gráficos para construir un dashboard lo más estético posible");*/
+        JPanel Contenedor = new JPanel();
+        JLabel LabelUsuario = new JLabel();
+        JLabel LabelContraseña = new JLabel();
+        JTextField Usuario = new JTextField();
+        JTextField Contraseña = new JTextField();
+        JButton Iniciar = new JButton();
+        
+        //Contenedor.setLayout((new FlowLayout((int)LEFT_ALIGNMENT)));
+        Contenedor.setLayout(new BoxLayout(Contenedor, BoxLayout.Y_AXIS));
+        
+        LabelUsuario.setText("Usuario");
+        LabelContraseña.setText("Contraseña");
+        
+        LabelContraseña.setSize(200, 20);
+        
+        Iniciar.setText("Iniciar");
+        
+        Iniciar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                String StringUsuario = Usuario.getText();
+                String StringContraseña = Contraseña.getText();
+                if(sesionDAO.Validar(StringUsuario, StringContraseña)){
+                    haySesion = true;
+                        JOptionPane.showMessageDialog(null, "Estas dentro!!");
+                    } else {
+                        haySesion = false;
+                        JOptionPane.showMessageDialog(null, "acceso Denegado");
+                    }
+            }       
+        });
+        
+        Contenedor.add(LabelUsuario);
+        Contenedor.add(Usuario);
+        Contenedor.add(LabelContraseña);
+        Contenedor.add(Contraseña);
+        Contenedor.add(Iniciar);
+        
+        jPanelMain.removeAll();
+        jPanelMain.add(Contenedor);
+        
+        jPanelMain.repaint();
+        jPanelMain.revalidate();        
     }
     
     
