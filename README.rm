@@ -1,3 +1,9 @@
 
 Nombre Estudiante: Bryan Cortine Pertuz
 Correo Electrónico del estudiante: Bryamcortine17@gmail.com
+
+Observaciones: 
+La solución no hace uso de un Objeto User. Solución funciona pero no es optima. 
+Imagine que en BD hay 1 millon de registros. La solución aplicada deja de ser optima. 
+Se debía hacer la consulta a BD pasando un filtro en el where con los datos del usuario y contraseña ingresados por el usuario
+Nota examen: 4.2
